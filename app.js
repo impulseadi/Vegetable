@@ -13,19 +13,29 @@ app.use(cors());
 app.use(express.static('public')); // Serve static files from the 'public' directory
 
 // Connect to MongoDB
+// const connectToDatabase = async () => {
+//     try {
+//         await mongoose.connect('mongodb://localhost:27017/vegetable_order_app', {
+//             useNewUrlParser: true,
+//             useUnifiedTopology: true,
+//         });
+//         console.log('MongoDB connected');
+//     } catch (err) {
+//         console.error('MongoDB connection error:', err);
+//         process.exit(1); // Exit process if connection fails
+//     }
+// };
+const mongoUri = process.env.MONGO_URI || 'mongodb://localhost:27017/vegetable_order_app';
+
 const connectToDatabase = async () => {
     try {
-        await mongoose.connect('mongodb://localhost:27017/vegetable_order_app', {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        });
+        await mongoose.connect(mongoUri);
         console.log('MongoDB connected');
     } catch (err) {
         console.error('MongoDB connection error:', err);
         process.exit(1); // Exit process if connection fails
     }
 };
-
 connectToDatabase();
 
 // Order Schema
